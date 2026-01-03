@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Teo Wen Kai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/6e9f096e7b.js"></script>
+    <link rel="stylesheet" href="./src/styles/styles.css" />
+    <script src="content-loading.js"></script>
+    <script>
+      async function loadPosts() {
+        try {
+          const res = await fetch("http://localhost:4000/api/v1/posts");
+          const data = await res.json();
+          var update = document.createElement("div");
+
+          data.forEach((post) => {
+            const thatPost = document.createElement("div");
+
+            const link = post.link;
+
+            thatPost.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <p>${post.description}</p>
+                    <a href="${post.link}" class="learn" target="_blank">Learn more</a>
+                    </br></br>
+                `;
+
+            update.appendChild(thatPost);
+
+            console.log(post.title, post._id);
+          });
+          document.getElementById(
+            "post-list"
+          ).innerHTML = `${update.innerHTML}`;
+        } catch (error) {
+          console.error("Error loading posts", error);
+        }
+      }
+
+      window.onload = loadPosts;
+    </script>
+  </head>
+  <body>
+    <div id="nav-bar"></div>
+    <div id="portfolio-content"></div>
+    <div id="about-content"></div>
+    <div id="projects-content"></div>
+    <div id="post-content"></div>
+  </body>
+</html>
